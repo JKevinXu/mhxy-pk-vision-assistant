@@ -51,14 +51,21 @@
 
 不建议也不支持。要实现通常需要隐藏信息来源，存在明显公平性、账号安全、法律与平台封禁风险。
 
-### 4.4 macOS 安卓平板模拟器场景
+### 4.4 MuMu 模拟器 / macOS 场景
 
-当前用户在 macOS 上通过安卓平板模拟器运行《梦幻西游》手游。该环境降低了“获取画面输入”的工程难度，但不改变合规边界：
+当前用户在 macOS 上通过 MuMu 模拟器运行《梦幻西游》手游。用户已有 `JKevinXu/GameAutomation` 师门任务自动化仓库，提供了可借鉴的本地工程经验：
 
-- 推荐输入来源：macOS 屏幕录制、QuickTime/OBS 录屏、模拟器窗口截图、用户授权的本地录像。
-- 可做：窗口 ROI 选择、离线抽帧、OCR 公开可见文字、手工事件标注、血量区间估算。
-- 不做：读取模拟器进程内存、hook 渲染层、抓取/解析游戏封包、ADB 自动点击、脚本化战斗操作。
-- 风险判断：即使技术上可从模拟器层面做更多自动化，也应视为高风险外挂/自动化方向并排除。
+- MuMu 应用路径：`/Applications/MuMuPlayer.app`。
+- macOS 权限：Screen Recording 用于截图/录屏，Accessibility 用于自动点击。PK Vision Assistant 只需要 Screen Recording；除非未来明确实现独立的非游戏 UI 操作，否则不需要 Accessibility。
+- 截图与 Retina：该仓库用 `pyautogui.size()` 获取逻辑屏幕尺寸，用 `pyautogui.screenshot().size` 获取物理截图尺寸，并以二者比值处理 2x Retina 缩放。
+- 视觉识别：该仓库通过 OpenCV `matchTemplate` 和 PNG 模板识别 MuMu/游戏 UI 元素，例如开始按钮、登录按钮、师门任务按钮。
+- 素材管理：该仓库把模板图放在 `game_elements/`；PK Vision Assistant 可采用类似结构，但命名为 `assets/templates/mumu/` 并附带分辨率/窗口尺寸元数据。
+
+可迁移到本项目的部分：屏幕截图、窗口/ROI 标定、Retina 坐标换算、OpenCV 模板匹配、调试截图与置信度记录。
+
+不可迁移的部分：自动点击、自动任务、LaunchAgent 定时执行游戏操作、ADB、进程/内存/封包读取、任何实时对战决策或操作。
+
+风险判断：MuMu 让画面采集更容易，但不会改变“只读公开画面 + 离线复盘”的产品边界。即使技术上能够自动点击或脚本化流程，PK Vision Assistant 仍应排除这些能力。
 
 ## 5. 推荐产品定位
 
