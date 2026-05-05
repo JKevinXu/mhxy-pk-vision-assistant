@@ -33,10 +33,19 @@
 - 输出：每个单位的血量区间、伤害/治疗事件时间线、关键回合复盘摘要。
 - 技术：Python、OpenCV/Pillow、可选 OCR、Streamlit/FastAPI 前端。
 
+## macOS 安卓模拟器场景
+
+如果游戏运行在 macOS 上的安卓平板模拟器中，推荐仍按“屏幕/录像输入”处理：
+
+- 可用 macOS 屏幕录制、模拟器窗口截图、OBS/QuickTime 录屏作为输入。
+- 可选做“窗口区域选择 + 离线抽帧 + OCR/人工标注”。
+- 不读取模拟器进程内存，不 hook 模拟器图形层，不使用 ADB 自动点击/自动战斗。
+- 实时能力如要做，也应限制为只读的公开画面叠加，并默认优先做离线复盘。
+
 ## 开发
 
 ```bash
-python3 -m venv .venv
+python3.11 -m venv .venv
 source .venv/bin/activate
 pip install -e '.[dev]'
 pytest
