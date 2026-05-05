@@ -1,0 +1,30 @@
+[project]
+name = "mhxy-pk-vision-assistant"
+version = "0.1.0"
+description = "Compliant research and MVP scaffolding for a MHXY mobile PK replay/vision assistant."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "JKevinXu", email = "xkevinj@gmail.com"}]
+dependencies = [
+  "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.5",
+]
+vision = [
+  "opencv-python>=4.9",
+  "pillow>=10.0",
+]
+app = [
+  "streamlit>=1.35",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
